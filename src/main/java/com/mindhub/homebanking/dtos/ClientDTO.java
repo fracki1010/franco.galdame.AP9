@@ -17,7 +17,7 @@ public class ClientDTO {
 
     public ClientDTO(Client client) {
         this.id = client.getId();
-        this.firstName = client.getName();
+        this.firstName = client.getFirstName();
         this.lastname = client.getLastname();
         this.email = client.getEmail();
         this.accounts = client
@@ -31,7 +31,7 @@ public class ClientDTO {
         return id;
     }
 
-    public String getName() {
+    public String getFirstName() {
         return firstName;
     }
 

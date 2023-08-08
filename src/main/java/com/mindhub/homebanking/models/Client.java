@@ -39,7 +39,7 @@ public class Client {
     }
 
 
-    public String getName() {
+    public String getFirstName() {
         return firstName;
     }
 
