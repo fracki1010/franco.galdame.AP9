@@ -18,7 +18,7 @@ public class Client {
 
     //Propiedad nueva en mis cuentas
 
-    @OneToMany(mappedBy = "clientId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
 
     public Client() {
@@ -71,7 +71,7 @@ public class Client {
     public void addAccount(Account account) {
         //Decirle a la mascota que el dueño soy yo
 
-        account.setClientId(this);
+        account.setClient(this);
         //agregar la mascota que me pasaron como parametro a mi coleccion de mascotas
         accounts.add(account);
     }
