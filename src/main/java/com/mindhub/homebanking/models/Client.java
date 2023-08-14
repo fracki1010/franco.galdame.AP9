@@ -19,7 +19,7 @@ public class Client {
     private String lastname;
     private String email;
 
-    //Propiedad nueva en mis cuentas
+    //Propiedad nueva en mis cuentas, uno a muchos
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
@@ -29,6 +29,13 @@ public class Client {
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
+
+
+    //Propiedad de <<Card>>, uno a muchos
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<Card> cards = new HashSet<>();
+
 
     public Client() {
     }
@@ -81,6 +88,9 @@ public class Client {
         this.clientLoans = clientLoans;
     }
 
+    public Set<Card> getCards() {
+        return cards;
+    }
 
 
     //Metodo para agregar una cuenta
@@ -105,6 +115,14 @@ public class Client {
 
     public List<Loan> getLoans() {
         return clientLoans.stream().map(loan -> loan.getLoan()).collect(toList());
+    }
+
+
+    //Metodo agregar <<Tarjeta>> a un cliente
+
+    public void addCard(Card card){
+        card.setClient(this);
+        cards.add(card);
     }
 }
 
