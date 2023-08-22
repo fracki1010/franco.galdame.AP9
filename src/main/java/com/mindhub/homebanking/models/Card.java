@@ -14,7 +14,7 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native",strategy = "native")
     private Long id;
-    private String cardholder;
+    private String cardHolder;
     private CardType type;
     private CardColor color;
     private String number;
@@ -32,8 +32,8 @@ public class Card {
     public Card(){
     }
 
-    public Card(String cardholder, CardType type, CardColor color, String number, String cvv, LocalDate thruDate, LocalDate fromDate) {
-        this.cardholder = cardholder;
+    public Card(String cardHolder, CardType type, CardColor color, String number, String cvv, LocalDate thruDate, LocalDate fromDate) {
+        this.cardHolder = cardHolder;
         this.type = type;
         this.color = color;
         this.number = number;
@@ -46,12 +46,12 @@ public class Card {
         return id;
     }
 
-    public String getCardholder() {
-        return cardholder;
+    public String getCardHolder() {
+        return cardHolder;
     }
 
-    public void setCardholder(String cardholder) {
-        this.cardholder = cardholder;
+    public void setCardHolder(String cardHolder) {
+        this.cardHolder = cardHolder;
     }
 
     public CardType getType() {

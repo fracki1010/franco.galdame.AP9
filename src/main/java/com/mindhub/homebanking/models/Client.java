@@ -18,6 +18,7 @@ public class Client {
     private String firstName;
     private String lastname;
     private String email;
+    private String password;
 
     //Propiedad nueva en mis cuentas, uno a muchos
 
@@ -40,10 +41,11 @@ public class Client {
     public Client() {
     }
 
-    public Client(String firstName, String lastname, String email) {
+    public Client(String firstName, String lastname, String email, String password) {
         this.firstName = firstName;
         this.lastname = lastname;
         this.email = email;
+        this.password = password;
     }
 
     public Set<Account> getAccounts() {
@@ -78,6 +80,14 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Set<ClientLoan> getClientLoans() {
