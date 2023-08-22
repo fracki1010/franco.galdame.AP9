@@ -69,7 +69,7 @@ public class ClientController {
     // Proceso de busqueda de cliente espeficico que ya inicio session
     @GetMapping("/clients/current")
     public ClientDTO getCurrentClient(Authentication authentication){
-        Client clientOptional = clientRepository.findByEmail(authentication.getName());
-        return new ClientDTO(clientOptional);
+        Client clientCurrent = clientRepository.findByEmail(authentication.getName());
+        return new ClientDTO(clientCurrent);
     }
 }
