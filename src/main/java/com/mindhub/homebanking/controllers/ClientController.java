@@ -45,6 +45,8 @@ public class ClientController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+    //registrar un cliente nuevo
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
 
     public ResponseEntity<Object> register(
