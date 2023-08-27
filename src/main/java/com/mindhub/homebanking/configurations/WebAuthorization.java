@@ -25,19 +25,23 @@ public class WebAuthorization{
 
         http.authorizeRequests()
                 .antMatchers("/api/login").permitAll()
-                .antMatchers("/web/index.html").permitAll()
+                .antMatchers("/web/index.html","/web/css/**","/web/js/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/clients/current").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN")
                 .antMatchers("/web/accounts.html").hasAnyAuthority("CLIENT","ADMIN")
                 .antMatchers("/rest/**").hasAuthority("ADMIN")
                 .antMatchers("/api/clients").hasAuthority("ADMIN");
+                /*.anyRequest().denyAll();*/
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/api/login");
 
-        http.logout().logoutUrl("/api/logout");
+        http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
 
 
 

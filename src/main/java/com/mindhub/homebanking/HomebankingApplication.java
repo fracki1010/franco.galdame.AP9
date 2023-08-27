@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class HomebankingApplication<commandLineRunner> {
@@ -27,7 +28,7 @@ public class HomebankingApplication<commandLineRunner> {
 		return (arg) -> {
 			//Creacion de clientes
 			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("1234"));
-			Client client2 = new Client("Franco", "Galdame", "franco23@mindhub.com",passwordEncoder.encode("123"));
+			Client client2 = new Client("Franco", "Galdame", "franco23@admin.com",passwordEncoder.encode("123"));
 
 			clientRepository.save(client1);
 			clientRepository.save(client2);
@@ -104,16 +105,19 @@ public class HomebankingApplication<commandLineRunner> {
 
 			Card card1 = new Card(client1.getFirstName()+" "+client1.getLastname(),CardType.DEBIT,CardColor.GOLD,"5090340500","998",LocalDate.now(),LocalDate.now().plusYears(5));
 			Card card2 = new Card(client1.getFirstName()+" "+client1.getLastname(),CardType.CREDIT,CardColor.TITANIUM,"5085909058","889",LocalDate.now(),LocalDate.now().plusYears(5));
+			Card card4 = new Card(client1.getFirstName()+" "+client1.getLastname(),CardType.CREDIT,CardColor.GOLD,"5085909068","839",LocalDate.now(),LocalDate.now().plusYears(5));
 
 			Card card3 = new Card(client2.getFirstName()+" "+client2.getLastname(),CardType.CREDIT,CardColor.SILVER,"5040563020","337",LocalDate.now(),LocalDate.now().plusYears(6));
 
 			client1.addCard(card1);
 			client1.addCard(card2);
 			client2.addCard(card3);
+			client1.addCard(card4);
 
 			cardRepository.save(card1);
 			cardRepository.save(card2);
 			cardRepository.save(card3);
+			cardRepository.save(card4);
 
 		};
 	}

@@ -46,27 +46,32 @@ public class AccountController {
         return new AccountDTO (accountOptional.get());
     }
 
-    @GetMapping("/clients/current/accounts")
-    public Account CreatedAccountCurrentClient(Authentication authentication){
-        Client clientCurrent = clientRepository.findByEmail(authentication.getName());
+    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
+    public ResponseEntity<Object> createdAccount(Authentication authentication){
 
-        return new Client(clientCurrent);
-    }
+        if (clientRepository.findByEmail(authentication.getName()).getAccounts().size() >= 3){
+            return new ResponseEntity<>("Usted llego al limite de cuentas posibles",HttpStatus.FORBIDDEN);
+        }
+
+        //Creador de número random y comprobar que no exista en la base de datos
+        String numberAccount;
+        do {
+
+            numberAccount = "VIN-" + String.valueOf(randomNumber(0, 99999999));
+
+        }while (accountRepository.existsByNumber(numberAccount));
 
 
-    public ResponseEntity<Object> createdAccount(
-            @RequestParam String number, @RequestParam LocalDate creationDate,
-            @RequestParam Double balance){
+        //creacion de la cuenta unica
+        Account accountCurrent = new Account(numberAccount,LocalDate.now(),0.0);
 
-        number = "VIN-"+  String.valueOf(randomNumber(0,99999999));
-        //Se debe verificar que el numero de cuenta no se repita
-        /*if(clientRepository.findByEmail(email) !=null){
-            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
-        }*/
-        accountRepository.save(new Account(number,)
-        clientRepository.save(new Client(firstName,lastName,email,passwordEncoder.encode(password)));
+        //Identificaion del clinte y asignacion de cuenta a cliente
+        clientRepository.findByEmail(authentication.getName()).addAccount(accountCurrent);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        //Guardado de cuenta
+        accountRepository.save(accountCurrent);
+
+        return new ResponseEntity<>("Cuenta creada con exito",HttpStatus.CREATED);
     }
 
 
@@ -74,5 +79,11 @@ public class AccountController {
     static int randomNumber(int min, int max) {
         Random random = new Random();
         return random.nextInt(max - min) + min;
+    }
+
+    //Identificacion del cliente
+    public Client getCurrentClient(Authentication authentication){
+        Client clientCurrent = clientRepository.findByEmail(authentication.getName());
+        return clientCurrent;
     }
 }
