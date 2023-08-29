@@ -4,7 +4,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import static java.util.stream.Collectors.toList;
 
 @Entity
 public class Client {
@@ -15,19 +18,34 @@ public class Client {
     private String firstName;
     private String lastname;
     private String email;
+    private String password;
 
-    //Propiedad nueva en mis cuentas
+    //Propiedad nueva en mis cuentas, uno a muchos
 
-    @OneToMany(mappedBy = "clientId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
+
+
+    //Propiendad de Client Loan, uno a muchos
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<ClientLoan> clientLoans = new HashSet<>();
+
+
+    //Propiedad de <<Card>>, uno a muchos
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<Card> cards = new HashSet<>();
+
 
     public Client() {
     }
 
-    public Client(String firstName, String lastname, String email) {
+    public Client(String firstName, String lastname, String email, String password) {
         this.firstName = firstName;
         this.lastname = lastname;
         this.email = email;
+        this.password = password;
     }
 
     public Set<Account> getAccounts() {
@@ -64,16 +82,57 @@ public class Client {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+
+    public void setClientLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
+    }
+
+    public Set<Card> getCards() {
+        return cards;
+    }
 
 
     //Metodo para agregar una cuenta
     public void addAccount(Account account) {
         //Decirle a la mascota que el dueño soy yo
 
-        account.setClientId(this);
+        account.setClient(this);
         //agregar la mascota que me pasaron como parametro a mi coleccion de mascotas
         accounts.add(account);
+    }
+
+
+    // Metodo de agregar <<Prestamos>> a cliente
+
+    public void addClientLoan(ClientLoan clientLoan){
+        clientLoan.setClient(this);
+        clientLoans.add(clientLoan);
+    }
+
+
+    //Obtener una lista de pagos
+
+    public List<Loan> getLoans() {
+        return clientLoans.stream().map(loan -> loan.getLoan()).collect(toList());
+    }
+
+
+    //Metodo agregar <<Tarjeta>> a un cliente
+
+    public void addCard(Card card){
+        card.setClient(this);
+        cards.add(card);
     }
 }
 
