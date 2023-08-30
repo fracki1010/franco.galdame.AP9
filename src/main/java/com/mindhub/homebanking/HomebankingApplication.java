@@ -56,10 +56,10 @@ public class HomebankingApplication<commandLineRunner> {
 
 			//Creacion de transacciones
 
-			Transaction transaction1 = new Transaction(TransactionType.CREDIT,400,"Progresar",LocalDate.now());
-			Transaction transaction2 = new Transaction(TransactionType.DEBIT, -300, "Pago x", LocalDate.now().plusDays(4));
-			Transaction transaction3 = new Transaction(TransactionType.DEBIT, -1000, "Pago x", LocalDate.now().plusDays(3));
-			Transaction transaction4 = new Transaction(TransactionType.CREDIT, 1500, "Sueldo", LocalDate.now().plusDays(1));
+			Transaction transaction1 = new Transaction(TransactionType.CREDIT,400.0,"Progresar",LocalDate.now());
+			Transaction transaction2 = new Transaction(TransactionType.DEBIT, -300.0, "Pago x", LocalDate.now().plusDays(4));
+			Transaction transaction3 = new Transaction(TransactionType.DEBIT, -1000.0, "Pago x", LocalDate.now().plusDays(3));
+			Transaction transaction4 = new Transaction(TransactionType.CREDIT, 1500.0, "Sueldo", LocalDate.now().plusDays(1));
 
 
 			account1.addTransaction(transaction1);

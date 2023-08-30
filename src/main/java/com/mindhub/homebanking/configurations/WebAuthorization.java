@@ -27,18 +27,21 @@ public class WebAuthorization{
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/web/index.html","/web/css/**","/web/js/**","/web/img/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers("/web/accounts.html","/web/account.html","/web/cards.html","/web/create-cards.html").hasAuthority("CLIENT")
-                .antMatchers("/api/clients/current").hasAuthority("CLIENT")
+                .antMatchers("/web/accounts.html","/web/account.html","/web/cards.html","/web/create-cards.html", "/web/transfers.html").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers("/api/clients/current").hasAnyAuthority("CLIENT","ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers( "/api/clients/current/cards").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers( HttpMethod.GET,"/api/clients/current/accounts").hasAnyAuthority("CLIENT","ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAuthority("CLIENT")
-                .antMatchers("/api/accounts").hasAuthority("ADMIN")
-                .antMatchers("/api/accounts/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/transactions").hasAuthority("CLIENT")
+                .antMatchers("/api/accounts").hasAnyAuthority("ADMIN","CLIENT")
+                .antMatchers("/api/accounts/**").hasAnyAuthority("ADMIN","CLIENT")
                 .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/clients/**").hasAuthority("ADMIN")
                 .antMatchers("/web/accounts.html").hasAnyAuthority("CLIENT","ADMIN")
                 .antMatchers("/rest/**").hasAuthority("ADMIN")
-                .antMatchers("/api/clients").hasAuthority("ADMIN")
-                .anyRequest().denyAll();
+                .antMatchers("/api/clients").hasAuthority("ADMIN");
+                /*.anyRequest().denyAll();*/
 
         http.formLogin()
                 .usernameParameter("email")

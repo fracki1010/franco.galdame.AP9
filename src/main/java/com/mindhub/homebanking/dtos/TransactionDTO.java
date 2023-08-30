@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class TransactionDTO {
     private Long id;
     private TransactionType type;
-    private int amount;
+    private Double amount;
     private String description;
     private LocalDate date;
 
@@ -29,7 +29,7 @@ public class TransactionDTO {
         return type;
     }
 
-    public int getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
