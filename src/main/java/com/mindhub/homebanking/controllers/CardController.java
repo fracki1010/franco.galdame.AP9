@@ -37,11 +37,27 @@ public class CardController {
             @RequestParam CardType cardType, @RequestParam CardColor cardColor,
             Authentication authentication) {
 
-    String colorOrTypeCard = "";
+        //Variables para el color y tipo
+        String colorOrTypeCard = "";
+        Client client = clientRepository.findByEmail(authentication.getName());
+
+        //Tarjetas del cliente del tipo pedido
+        Set<Card> currentCardType = client
+                .getCards()
+                .stream()
+                .filter(card -> card.getType() == cardType)
+                .collect(Collectors.toSet());
+
+        //Tarjetas de color pedido dentro del tipo pedido
+        Set<Card> currentCardColor = currentCardType
+                .stream()
+                .filter(card -> card.getColor() == cardColor)
+                .collect(Collectors.toSet());
+
 
         //Tarjetas de diferente tipo repetidas
-        if (amountCardType(cardType, authentication) == 3){
-            switch (cardType){
+        if (currentCardType.size() == 3) {
+            switch (cardType) {
                 case CREDIT:
                     colorOrTypeCard = "CREDIT";
                     break;
@@ -49,13 +65,13 @@ public class CardController {
                     colorOrTypeCard = "DEBIT";
                     break;
             }
-            return new ResponseEntity<>("Alcanzo el limite de tarjetas de "+colorOrTypeCard, HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Alcanzo el limite de tarjetas de " + colorOrTypeCard, HttpStatus.FORBIDDEN);
         }
 
 
         //Tarjetas del mismo color repetidas
-        if (amountCardColor(cardType, cardColor, authentication) == 1){
-            switch (cardColor){
+        if (currentCardColor.size() == 1) {
+            switch (cardColor) {
                 case GOLD:
                     colorOrTypeCard = "GOLD";
                     break;
@@ -66,15 +82,15 @@ public class CardController {
                     colorOrTypeCard = "TITANIUM";
                     break;
             }
-            return new ResponseEntity<>("Alcanzo el limite de la tarjeta "+colorOrTypeCard, HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Alcanzo el limite de la tarjeta " + colorOrTypeCard, HttpStatus.FORBIDDEN);
         }
 
 
         //Creacion de cvv aleatorio
         String cvv;
         do {
-            cvv = String.valueOf(randomNumber(100,999));
-        }while (cardRepository.existsByCvv(cvv));
+            cvv = String.valueOf(randomNumber(100, 999));
+        } while (cardRepository.existsByCvv(cvv));
 
 
         //Creacion del número de tarjera aleatorio
@@ -83,18 +99,17 @@ public class CardController {
 
             numberCard = creationNumberCard();
 
-        }while (cardRepository.existsByNumber(numberCard));
+        } while (cardRepository.existsByNumber(numberCard));
 
 
         //Creacion de tarjeta
-        Client client = clientRepository.findByEmail(authentication.getName());
-        Card card = new Card(client.getFirstName() +" "+ client.getLastname(),
-                                cardType,
-                                cardColor,
-                                numberCard,
-                                cvv,
-                                LocalDate.now(),
-                                LocalDate.now().plusYears(5));
+        Card card = new Card(client.getFirstName() + " " + client.getLastname(),
+                cardType,
+                cardColor,
+                numberCard,
+                cvv,
+                LocalDate.now(),
+                LocalDate.now().plusYears(5));
 
         //Asignacion de tarjeta a cliente
         clientRepository.findByEmail(authentication.getName()).addCard(card);
@@ -111,41 +126,15 @@ public class CardController {
         return random.nextInt(max - min) + min;
     }
 
-    static String creationNumberCard(){
+    static String creationNumberCard() {
         String numbersCardsComplete = "";
-        for (int i=0;i<4;i++){
+        for (int i = 0; i < 4; i++) {
             String numbersCard = String.valueOf(randomNumber(1000, 9999));
             numbersCardsComplete += numbersCard;
-            if (i<3){
+            if (i < 3) {
                 numbersCardsComplete += "-";
             }
         }
         return numbersCardsComplete;
     }
-
-    public int amountCardType(CardType cardType, Authentication authentication){
-        return clientRepository
-                .findByEmail(authentication.getName())
-                .getCards()
-                .stream()
-                .filter(card -> card.getType() == cardType)
-                .collect(Collectors.toSet())
-                .size();
-    }
-    public int amountCardColor(CardType cardType, CardColor cardColor, Authentication authentication){
-        Set<Card> cardsCurrent = clientRepository
-                .findByEmail(authentication.getName())
-                .getCards()
-                .stream()
-                .filter(card -> card.getType() == cardType)
-                .collect(Collectors.toSet());
-        int amountcard = cardsCurrent
-                .stream()
-                .filter(card -> card.getColor().equals(cardColor))
-                .collect(Collectors.toList())
-                .size();
-        return amountcard;
-    }
-
-
 }
