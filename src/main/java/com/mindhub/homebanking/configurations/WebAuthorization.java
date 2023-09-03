@@ -27,7 +27,8 @@ public class WebAuthorization{
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/web/index.html","/web/css/**","/web/js/**","/web/img/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers("/web/accounts.html","/web/account.html","/web/cards.html","/web/create-cards.html", "/web/transfers.html").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers("/web/accounts.html","/web/account.html","/web/cards.html","/web/create-cards.html",
+                        "/web/transfers.html","/web/loan-application.html").hasAnyAuthority("CLIENT","ADMIN")
                 .antMatchers("/api/clients/current").hasAnyAuthority("CLIENT","ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/cards").hasAnyAuthority("CLIENT","ADMIN")
                 .antMatchers( "/api/clients/current/cards").hasAnyAuthority("CLIENT","ADMIN")
@@ -36,6 +37,8 @@ public class WebAuthorization{
                 .antMatchers(HttpMethod.POST, "/api/transactions").hasAnyAuthority("CLIENT","ADMIN")
                 .antMatchers("/api/accounts").hasAnyAuthority("ADMIN","CLIENT")
                 .antMatchers("/api/accounts/**").hasAnyAuthority("ADMIN","CLIENT")
+                .antMatchers(HttpMethod.GET, "/api/loans").hasAnyAuthority("ADMIN","CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/loans").hasAnyAuthority("ADMIN","CLIENT")
                 .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/clients/**").hasAuthority("ADMIN")
                 .antMatchers("/web/accounts.html").hasAnyAuthority("CLIENT","ADMIN")

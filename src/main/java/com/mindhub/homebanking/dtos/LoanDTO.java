@@ -26,11 +26,6 @@ public class LoanDTO {
         this.name = loan.getName();
         this.maxAmount = loan.getMaxAmount();
         this.payments = loan.getPayments();
-        this.clientLoans = loan
-                            .getClientLoans()
-                            .stream()
-                            .map(clientLoan -> new ClientLoanDTO(clientLoan))
-                            .collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -49,7 +44,5 @@ public class LoanDTO {
         return payments;
     }
 
-    public Set<ClientLoanDTO> getClientLoans() {
-        return clientLoans;
-    }
+
 }
