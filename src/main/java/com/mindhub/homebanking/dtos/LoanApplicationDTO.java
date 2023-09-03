@@ -1,15 +1,5 @@
 package com.mindhub.homebanking.dtos;
 
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.ClientLoan;
-import com.mindhub.homebanking.models.Loan;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.List;
-
 public class LoanApplicationDTO {
     private Long loanId;
     private Double amount;

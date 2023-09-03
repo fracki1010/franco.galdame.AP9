@@ -1,6 +1,5 @@
 package com.mindhub.homebanking.dtos;
 
-import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.ClientLoan;
 import com.mindhub.homebanking.models.Loan;
 import org.hibernate.annotations.GenericGenerator;
@@ -8,9 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.awt.geom.Rectangle2D;
-import java.util.HashSet;
-import java.util.Set;
+
 
 public class ClientLoanDTO {
     @Id
