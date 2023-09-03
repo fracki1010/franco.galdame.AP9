@@ -26,7 +26,6 @@ public class LoanApplicationDTO {
         this.payments = payments;
         this.toAccountNumber = toAccountNumber;
     }
-    /////////////// QUE SIGUE ACA????---------------
 
     public Long getLoanId() {
         return loanId;
