@@ -27,7 +27,7 @@ public class HomebankingApplication<commandLineRunner> {
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository){
 		return (arg) -> {
 			//Creacion de clientes
-			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("1234"));
+			/*Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("1234"));
 			Client client2 = new Client("Franco", "Galdame", "franco23@admin.com",passwordEncoder.encode("123"));
 
 			clientRepository.save(client1);
@@ -117,7 +117,7 @@ public class HomebankingApplication<commandLineRunner> {
 			cardRepository.save(card1);
 			cardRepository.save(card2);
 			cardRepository.save(card3);
-			cardRepository.save(card4);
+			cardRepository.save(card4);*/
 
 		};
 	}
