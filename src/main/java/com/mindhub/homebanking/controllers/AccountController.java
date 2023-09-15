@@ -32,16 +32,11 @@ public class AccountController {
         return accountService.getAccountsCurrent(authentication);
     }
 
-    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
+    @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> createdAccount(Authentication authentication){
         return accountService.createdAccount(authentication);
     }
 
-
-    //Funcion del número aleatorio
-    public int randomNumber(int min, int max) {
-        return accountService.randomNumber(min, max);
-    }
 
     //Identificacion del cliente
     public Client getCurrentClient(Authentication authentication){

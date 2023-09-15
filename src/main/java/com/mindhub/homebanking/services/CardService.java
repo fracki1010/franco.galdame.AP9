@@ -11,7 +11,4 @@ public interface CardService {
     ResponseEntity<Object> createdCard(CardType cardType, CardColor cardColor,
                                        Authentication authentication);
 
-    int randomNumber(int min, int max);
-
-    String creationNumberCard();
 }

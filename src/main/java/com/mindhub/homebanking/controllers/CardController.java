@@ -7,10 +7,7 @@ import com.mindhub.homebanking.services.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -20,21 +17,11 @@ public class CardController {
     private CardService cardService;
 
 
-    @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
+    @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> createdCard(
             @RequestParam CardType cardType, @RequestParam CardColor cardColor,
             Authentication authentication){
         return cardService.createdCard(cardType, cardColor, authentication);
     }
 
-
-    //Funcion del número aleatorio
-    public int randomNumber(int min, int max) {
-        return cardService.randomNumber(min, max);
-    }
-
-    //Creacion del número aleatorio
-    public String creationNumberCard() {
-        return cardService.creationNumberCard();
-    }
 }

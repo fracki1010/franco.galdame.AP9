@@ -6,6 +6,7 @@ import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +65,7 @@ public class AccountServiceImplement implements AccountService {
         String numberAccount;
         do {
 
-            numberAccount = "VIN-" + String.valueOf(randomNumber(0, 99999999));
+            numberAccount = "VIN-" + String.valueOf(CardUtils.randomNumber(0, 99999999));
 
         }while (accountRepository.existsByNumber(numberAccount));
 
@@ -81,13 +82,6 @@ public class AccountServiceImplement implements AccountService {
         return new ResponseEntity<>("Cuenta creada con exito",HttpStatus.CREATED);
     }
 
-
-    //Funcion del número aleatorio
-    @Override
-    public int randomNumber(int min, int max) {
-        Random random = new Random();
-        return random.nextInt(max - min) + min;
-    }
 
     //Identificacion del cliente
     @Override

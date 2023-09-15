@@ -7,17 +7,15 @@ import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.services.CardService;
+import com.mindhub.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -85,7 +83,7 @@ public class CardServiceImplement implements CardService {
         //Creacion de cvv aleatorio
         String cvv;
         do {
-            cvv = String.valueOf(randomNumber(100, 999));
+            cvv = CardUtils.getCvv();
         } while (cardRepository.existsByCvv(cvv));
 
 
@@ -93,7 +91,7 @@ public class CardServiceImplement implements CardService {
         String numberCard;
         do {
 
-            numberCard = creationNumberCard();
+            numberCard = CardUtils.creationNumberCard();
 
         } while (cardRepository.existsByNumber(numberCard));
 
@@ -116,22 +114,7 @@ public class CardServiceImplement implements CardService {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @Override
-    public int randomNumber(int min, int max) {
-        Random random = new Random();
-        return random.nextInt(max - min) + min;
-    }
-
-    @Override
-    public String creationNumberCard() {
-        String numbersCardsComplete = "";
-        for (int i = 0; i < 4; i++) {
-            String numbersCard = String.valueOf(randomNumber(1000, 9999));
-            numbersCardsComplete += numbersCard;
-            if (i < 3) {
-                numbersCardsComplete += "-";
-            }
-        }
-        return numbersCardsComplete;
+    private static String getCvv() {
+        return String.valueOf(CardUtils.randomNumber(100, 999));
     }
 }

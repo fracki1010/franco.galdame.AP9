@@ -16,7 +16,5 @@ public interface AccountService {
 
     ResponseEntity<Object> createdAccount(Authentication authentication);
 
-    int randomNumber(int min, int max);
-
     Client getCurrentClient(Authentication authentication);
 }

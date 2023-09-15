@@ -5,10 +5,7 @@ import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 
@@ -21,7 +18,7 @@ public class TransactionController {
 private TransactionService transactionService;
 
 
-    @RequestMapping(path = "/transactions", method = RequestMethod.POST)
+    @PostMapping("/transactions")
     public ResponseEntity<Object> createdTransaction(
             @RequestParam String fromAccountNumber, @RequestParam String toAccountNumber,
             @RequestParam Double amount, @RequestParam String description,

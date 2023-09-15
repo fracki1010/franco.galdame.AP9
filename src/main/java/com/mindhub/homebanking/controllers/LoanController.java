@@ -24,7 +24,7 @@ public class LoanController {
         return loanService.getLoans();
     }
 
-    @RequestMapping(path = "/loans", method = RequestMethod.POST)
+    @PostMapping("/loans")
     public ResponseEntity applyForLoan(@RequestBody LoanApplicationDTO loanApplicationDTO,
                                        Authentication authentication) {
     return loanService.applyForLoan(loanApplicationDTO, authentication);
